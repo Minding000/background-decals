@@ -1,0 +1,14 @@
+# MacOS
+.DS_Store
+
+# IntelliJ
+.idea
+
+# VSCode
+.vscode
+
+# NodeJS
+node_modules
+
+# Output folder
+dist
