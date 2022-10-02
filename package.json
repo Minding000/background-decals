@@ -1,0 +1,30 @@
+{
+	"name": "background-decals",
+	"version": "1.0.0",
+	"description": "TypeScript library for creating unique animated backgrounds on websites.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Minding000/background-decals.git"
+	},
+	"keywords": [
+		"background",
+		"decal"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Minding000/background-decals/issues"
+	},
+	"homepage": "https://github.com/Minding000/background-decals#readme",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vite ./tests/integration/manual",
+		"build": "swc -fd src/* -d dist",
+		"test": "jest"
+	},
+	"devDependencies": {
+		"@swc/cli": "^0.1.57",
+		"@swc/core": "^1.3.4",
+		"typescript": "^4.8.4",
+		"vite": "^3.1.4"
+	}
+}
