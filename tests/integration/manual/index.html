@@ -7,9 +7,12 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Document</title>
 		<script defer type="module">
-			import Decal from "../../../src"
+			import { Decal, DottedCircle, Color } from "../../../src";
 
-			const decal = new Decal()
+			const decal = new Decal([
+				new DottedCircle(12, 0.8, Color.fromBytes(32, 72, 34, 200)),
+				new DottedCircle(12, 0.6, Color.fromBytes(132, 22, 74, 200))
+			])
 			decal.start()
 			const canvas = decal.getElement()
 			canvas.style.border = "solid 1px #546546"

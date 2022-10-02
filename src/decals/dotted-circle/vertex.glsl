@@ -1,13 +1,12 @@
 #version 300 es
 uniform float offset;
 uniform int numberOfDots;
+uniform float radius;
 uniform vec2 resolution;
 
 #define PI radians(180.0)
 
 void main() {
-	float radius = 0.8;
-
 	float index = (float(gl_VertexID) + offset) / float(numberOfDots);
 	float angle = index * PI * 2.0;
 
