@@ -1,5 +1,5 @@
 #version 300 es
-uniform float offset;
+uniform float continuousFloatBetweenZeroAndIterationCount;
 uniform int numberOfUniqueIterations;
 uniform int numberOfDots;
 uniform vec2 resolution;
@@ -16,7 +16,6 @@ void main() {
 	float pointIndex = float(gl_VertexID);
 	float invalidIterationNumber = -1.0;
 	float randomFloatBeteenZeroAndOne = noise(pointIndex + invalidIterationNumber);
-	float continuousFloatBetweenZeroAndIterationCount = offset;
 	float globalYPosition = -randomFloatBeteenZeroAndOne - continuousFloatBetweenZeroAndIterationCount;
 	float localYPosition = fract(globalYPosition);
 	float iterationIndex = -float(int(globalYPosition) % numberOfUniqueIterations);

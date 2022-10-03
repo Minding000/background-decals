@@ -31,9 +31,9 @@ export class FallingDots extends Layer {
 
 	public render(): void {
 		const iterationDurationInMilliseconds = FallingDots.MILLISECONDS_PER_SECOND * this.iterationDurationInSeconds
-		const offset = (Date.now() / iterationDurationInMilliseconds) % this.numberOfUniqueIterations
+		const continuousFloatBetweenZeroAndIterationCount = (Date.now() / iterationDurationInMilliseconds) % this.numberOfUniqueIterations
 		this.program?.use()
-		this.program?.setUniform("1f", "offset", offset)
+		this.program?.setUniform("1f", "continuousFloatBetweenZeroAndIterationCount", continuousFloatBetweenZeroAndIterationCount)
 		this.context?.drawArrays(this.context.POINTS, 0, this.numberOfDots);
 	}
 }
