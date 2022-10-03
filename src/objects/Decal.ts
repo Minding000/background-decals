@@ -3,8 +3,8 @@ import { Layer } from './Layer';
 export class Decal {
 	private readonly canvas: HTMLCanvasElement
 	private readonly context: WebGL2RenderingContext
-	private isAnimating: boolean = false
-	private lastPerformanceNow = 0
+	private isRendering: boolean = false
+	private lastRenderTimePoint = 0
 
 	public constructor(
 		private readonly layers: Layer[],
@@ -26,27 +26,27 @@ export class Decal {
 	}
 
 	public start(): void {
-		this.isAnimating = true
-		requestAnimationFrame(() => this.render())
+		this.isRendering = true
+		requestAnimationFrame(this.render.bind(this))
 	}
 
 	private render(): void {
-		if (!this.isAnimating)
+		if (!this.isRendering)
 			return
 
-		requestAnimationFrame(() => this.render())
+		requestAnimationFrame(this.render.bind(this))
 
-		if(!this.fpsCapElapsed())
+		if(!this.shouldRender())
 			return
 
 		this.renderLayers()
 
-		this.lastPerformanceNow = performance.now()
+		this.lastRenderTimePoint = performance.now()
 	}
 
-	private fpsCapElapsed(): boolean {
-		const msElapsed = performance.now() - this.lastPerformanceNow
-		return msElapsed > 1000 / this.maxFps
+	private shouldRender(): boolean {
+		const elapsedTimeInMilliseconds = performance.now() - this.lastRenderTimePoint
+		return elapsedTimeInMilliseconds > this.millisecondsBetweenFrames
 	}
 
 	private renderLayers(): void {
@@ -55,6 +55,6 @@ export class Decal {
 	}
 
 	public stop(): void {
-		this.isAnimating = false
+		this.isRendering = false
 	}
 }
