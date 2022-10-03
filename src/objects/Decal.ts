@@ -1,4 +1,5 @@
 import { Layer } from './Layer';
+import { DecalError } from './errors';
 
 export class Decal {
 	private readonly canvas: HTMLCanvasElement
@@ -9,17 +10,22 @@ export class Decal {
 
 	public constructor(
 		private readonly layers: Layer[],
-		targetFrameRate: number = 60
+		configurationOverwrites?: Partial<DecalConfiguration>
 	) {
-		this.canvas = document.createElement('canvas')
-		this.canvas.width = 800
-		this.canvas.height = 600
-		this.millisecondsBetweenFrames = 1000 / targetFrameRate
-		this.context = this.canvas.getContext("webgl2")
-		this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
+		try {
+			const configuration = { ...defaultConfiguration, ...configurationOverwrites }
+			this.canvas = document.createElement('canvas')
+			this.canvas.width = configuration.width
+			this.canvas.height = configuration.height
+			this.millisecondsBetweenFrames = 1000 / configuration.targetFrameRate
+			this.context = this.canvas.getContext("webgl2")
+			this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-		for(const layer of this.layers)
-			layer.setUp(this.context)
+			for(const layer of this.layers)
+				layer.setUp(this.context)
+		} catch(error) {
+			throw new DecalError("Failed to create decal", error)
+		}
 	}
 
 	public getElement(): HTMLCanvasElement {
@@ -58,4 +64,16 @@ export class Decal {
 	public stop(): void {
 		this.isRendering = false
 	}
+}
+
+export interface DecalConfiguration {
+	targetFrameRate: number,
+	width: number,
+	height: number
+}
+
+const defaultConfiguration: DecalConfiguration = {
+	width: 800,
+	height: 600,
+	targetFrameRate: 60,
 }

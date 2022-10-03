@@ -1,3 +1,5 @@
+import { WebGlError } from '../errors';
+
 export class Shader {
 
 	public constructor(
@@ -9,10 +11,16 @@ export class Shader {
 		const shader = context.createShader(this.getWebGlType(context))
 		context.shaderSource(shader, this.code)
 		context.compileShader(shader)
+		this.validate(context, shader)
 		return shader
 	}
 
 	private getWebGlType(context: WebGL2RenderingContext): number {
 		return this.type === "vertex" ? context.VERTEX_SHADER : context.FRAGMENT_SHADER
+	}
+
+	private validate(context: WebGL2RenderingContext, shader: WebGLShader): void {
+		if(!context.getShaderParameter(shader, context.COMPILE_STATUS))
+			throw new WebGlError("Failed to compile shader", context.getShaderInfoLog(shader))
 	}
 }

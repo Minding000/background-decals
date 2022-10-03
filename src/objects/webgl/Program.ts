@@ -16,7 +16,7 @@ export class Program {
 		for(const shader of webGlShaders)
 			context.attachShader(this.program, shader)
 		context.linkProgram(this.program)
-		Program.validate(context, this.program)
+		this.validate()
 		for(const shader of webGlShaders) {
 			context.detachShader(this.program, shader)
 			context.deleteShader(shader)
@@ -38,11 +38,11 @@ export class Program {
 		this.setUniform("4f", name, ...color.getWebGlValues())
 	}
 
-	private static validate(context: WebGL2RenderingContext, program: WebGLProgram): void {
-		if(!context.getProgramParameter(program, context.LINK_STATUS))
-			throw new WebGlError("Failed to create program", context.getProgramInfoLog(program))
-		context.validateProgram(program);
-		if(!context.getProgramParameter(program, context.VALIDATE_STATUS))
-			throw new WebGlError("Failed to validate program", context.getProgramInfoLog(program))
+	private validate(): void {
+		if(!this.context.getProgramParameter(this.program, this.context.LINK_STATUS))
+			throw new WebGlError("Failed to create program", this.context.getProgramInfoLog(this.program))
+		this.context.validateProgram(this.program);
+		if(!this.context.getProgramParameter(this.program, this.context.VALIDATE_STATUS))
+			throw new WebGlError("Failed to validate program", this.context.getProgramInfoLog(this.program))
 	}
 }

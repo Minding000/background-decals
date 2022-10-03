@@ -1,5 +1,9 @@
 export class Color {
 	private static readonly BYTE_MAX_VALUE = 255
+	public static readonly RED = Color.fromBytes(Color.BYTE_MAX_VALUE, 0, 0, Color.BYTE_MAX_VALUE)
+	public static readonly GREEN = Color.fromBytes(0, Color.BYTE_MAX_VALUE, 0, Color.BYTE_MAX_VALUE)
+	public static readonly BLUE = Color.fromBytes(0, 0, Color.BYTE_MAX_VALUE, Color.BYTE_MAX_VALUE)
+	public static readonly DEFAULT = Color.BLUE
 
 	private constructor(
 		private readonly red: number,
