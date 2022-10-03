@@ -20,17 +20,17 @@ export class DottedCircle extends Layer {
 
 	public setUp(context: WebGL2RenderingContext): void {
 		this.setUpProgram(context, vertexShaderCode, fragmentShaderCode)
-		this.program.setUniform("2f", "resolution", context.canvas.width, context.canvas.height)
-		this.program.setColor("color", this.color)
-		this.program.setUniform("1i", "numberOfDots", this.numberOfDots)
-		this.program.setUniform("1f", "radius", this.radius)
+		this.program?.setUniform("2f", "resolution", context.canvas.width, context.canvas.height)
+		this.program?.setColor("color", this.color)
+		this.program?.setUniform("1i", "numberOfDots", this.numberOfDots)
+		this.program?.setUniform("1f", "radius", this.radius)
 	}
 
 	public render(): void {
 		const offset = (Date.now() % 1000) / 1000
-		this.program.use()
-		this.program.setUniform("1f", "offset", offset)
-		this.context.drawArrays(this.context.POINTS, 0, this.numberOfDots);
+		this.program?.use()
+		this.program?.setUniform("1f", "offset", offset)
+		this.context?.drawArrays(this.context.POINTS, 0, this.numberOfDots);
 	}
 }
 

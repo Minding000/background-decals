@@ -8,10 +8,17 @@ export class Shader {
 	) {}
 
 	public getWebGlShader(context: WebGL2RenderingContext): WebGLShader {
-		const shader = context.createShader(this.getWebGlType(context))
+		const shader = this.createShader(context)
 		context.shaderSource(shader, this.code)
 		context.compileShader(shader)
 		this.validate(context, shader)
+		return shader
+	}
+
+	private createShader(context: WebGL2RenderingContext): WebGLShader {
+		const shader = context.createShader(this.getWebGlType(context))
+		if(!shader)
+			throw new Error("Failed to create WebGL2 shader.")
 		return shader
 	}
 

@@ -24,17 +24,17 @@ export class FallingDots extends Layer {
 
 	public setUp(context: WebGL2RenderingContext): void {
 		this.setUpProgram(context, vertexShaderCode, fragmentShaderCode)
-		this.program.setColor("color", this.color)
-		this.program.setUniform("1i", "numberOfDots", this.numberOfDots)
-		this.program.setUniform("1i", "numberOfUniqueIterations", this.numberOfUniqueIterations)
+		this.program?.setColor("color", this.color)
+		this.program?.setUniform("1i", "numberOfDots", this.numberOfDots)
+		this.program?.setUniform("1i", "numberOfUniqueIterations", this.numberOfUniqueIterations)
 	}
 
 	public render(): void {
 		const iterationDurationInMilliseconds = FallingDots.MILLISECONDS_PER_SECOND * this.iterationDurationInSeconds
 		const offset = (Date.now() / iterationDurationInMilliseconds) % this.numberOfUniqueIterations
-		this.program.use()
-		this.program.setUniform("1f", "offset", offset)
-		this.context.drawArrays(this.context.POINTS, 0, this.numberOfDots);
+		this.program?.use()
+		this.program?.setUniform("1f", "offset", offset)
+		this.context?.drawArrays(this.context.POINTS, 0, this.numberOfDots);
 	}
 }
 

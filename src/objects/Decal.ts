@@ -14,18 +14,30 @@ export class Decal {
 	) {
 		try {
 			const configuration = { ...defaultConfiguration, ...configurationOverwrites }
-			this.canvas = document.createElement('canvas')
-			this.canvas.width = configuration.width
-			this.canvas.height = configuration.height
 			this.millisecondsBetweenFrames = 1000 / configuration.targetFrameRate
-			this.context = this.canvas.getContext("webgl2")
-			this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
+			this.canvas = this.createCanvas(configuration.width, configuration.height)
+			this.context = this.createContext()
 
 			for(const layer of this.layers)
 				layer.setUp(this.context)
 		} catch(error) {
 			throw new DecalError("Failed to create decal", error)
 		}
+	}
+
+	private createCanvas(width: number, height: number): HTMLCanvasElement {
+		const canvas = document.createElement('canvas')
+		canvas.width = width
+		canvas.height = height
+		return canvas
+	}
+
+	private createContext(): WebGL2RenderingContext {
+		const context = this.canvas.getContext("webgl2")
+		if(!context)
+			throw new Error("Failed to create WebGL2 context.")
+		context.viewport(0, 0, this.canvas.width, this.canvas.height);
+		return context
 	}
 
 	public getElement(): HTMLCanvasElement {

@@ -11,7 +11,7 @@ export class Program {
 		private readonly context: WebGL2RenderingContext,
 		shaders: Shader[]
 	) {
-		this.program = context.createProgram()
+		this.program = this.createProgram()
 		const webGlShaders = shaders.map(shader => shader.getWebGlShader(context))
 		for(const shader of webGlShaders)
 			context.attachShader(this.program, shader)
@@ -21,6 +21,13 @@ export class Program {
 			context.detachShader(this.program, shader)
 			context.deleteShader(shader)
 		}
+	}
+
+	private createProgram(): WebGLProgram {
+		const program = this.context.createProgram()
+		if(!program)
+			throw new Error("Failed to create WebGL2 program.")
+		return program
 	}
 
 	public use(): void {
