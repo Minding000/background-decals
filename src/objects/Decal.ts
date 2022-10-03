@@ -8,12 +8,12 @@ export class Decal {
 
 	public constructor(
 		private readonly layers: Layer[],
-		private maxFps: number
+		targetFrameRate: number = 60
 	) {
 		this.canvas = document.createElement('canvas')
 		this.canvas.width = 800
 		this.canvas.height = 600
-		this.maxFps = this.maxFps || 120
+		this.millisecondsBetweenFrames = 1000 / targetFrameRate
 		this.context = this.canvas.getContext("webgl2")
 		this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
 
