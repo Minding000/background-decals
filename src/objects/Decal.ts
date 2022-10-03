@@ -5,6 +5,7 @@ export class Decal {
 	private readonly context: WebGL2RenderingContext
 	private isRendering: boolean = false
 	private lastRenderTimePoint = 0
+	private readonly millisecondsBetweenFrames: number
 
 	public constructor(
 		private readonly layers: Layer[],
