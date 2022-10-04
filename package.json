@@ -20,6 +20,7 @@
 		"dev": "vite ./tests/integration/manual",
 		"build": "tsc",
 		"build:swc": "swc -fd src/* -d dist",
+		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:once": "vitest run",
 		"test:coverage": "vitest run --coverage"
