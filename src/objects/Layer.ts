@@ -13,7 +13,6 @@ export abstract class Layer {
 			new Shader(fragmentShaderCode, "fragment")
 		])
 		this.program.use()
-		console.debug("--- Program complete ---")
 	}
 
 	public abstract render(): void

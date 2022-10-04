@@ -1,6 +1,4 @@
-import { Shader, Uniform } from './Shader';
-import { WebGlError } from '../index';
-import { Color } from './Color';
+import { Shader, Uniform, Color, WebGlError } from '..';
 
 export class Program {
 	public readonly program: WebGLProgram
