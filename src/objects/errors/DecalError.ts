@@ -1,6 +1,6 @@
 export class DecalError extends Error {
 
-	constructor(message: string, public cause: Error) {
+	constructor(message: string, public cause: unknown) {
 		super(message);
 		Object.setPrototypeOf(this, DecalError.prototype);
 	}

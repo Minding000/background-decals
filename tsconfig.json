@@ -4,5 +4,9 @@
 		"moduleResolution": "Node",
 		"target": "ESNext",
 		"lib": ["ESNext", "DOM"],
-	}
+		"outDir": "dist",
+		"strict": true,
+		"skipLibCheck": true
+	},
+	"include": ["src"]
 }

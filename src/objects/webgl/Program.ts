@@ -11,16 +11,23 @@ export class Program {
 		private readonly context: WebGL2RenderingContext,
 		shaders: Shader[]
 	) {
-		this.program = context.createProgram()
+		this.program = this.createProgram()
 		const webGlShaders = shaders.map(shader => shader.getWebGlShader(context))
 		for(const shader of webGlShaders)
 			context.attachShader(this.program, shader)
 		context.linkProgram(this.program)
-		Program.validate(context, this.program)
+		this.validate()
 		for(const shader of webGlShaders) {
 			context.detachShader(this.program, shader)
 			context.deleteShader(shader)
 		}
+	}
+
+	private createProgram(): WebGLProgram {
+		const program = this.context.createProgram()
+		if(!program)
+			throw new Error("Failed to create WebGL2 program.")
+		return program
 	}
 
 	public use(): void {
@@ -38,11 +45,11 @@ export class Program {
 		this.setUniform("4f", name, ...color.getWebGlValues())
 	}
 
-	private static validate(context: WebGL2RenderingContext, program: WebGLProgram): void {
-		if(!context.getProgramParameter(program, context.LINK_STATUS))
-			throw new WebGlError("Failed to create program", context.getProgramInfoLog(program))
-		context.validateProgram(program);
-		if(!context.getProgramParameter(program, context.VALIDATE_STATUS))
-			throw new WebGlError("Failed to validate program", context.getProgramInfoLog(program))
+	private validate(): void {
+		if(!this.context.getProgramParameter(this.program, this.context.LINK_STATUS))
+			throw new WebGlError("Failed to create program", this.context.getProgramInfoLog(this.program))
+		this.context.validateProgram(this.program);
+		if(!this.context.getProgramParameter(this.program, this.context.VALIDATE_STATUS))
+			throw new WebGlError("Failed to validate program", this.context.getProgramInfoLog(this.program))
 	}
 }
