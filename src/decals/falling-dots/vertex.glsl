@@ -1,8 +1,6 @@
 #version 300 es
 uniform float continuousFloatBetweenZeroAndIterationCount;
 uniform int numberOfUniqueIterations;
-uniform int numberOfDots;
-uniform vec2 resolution;
 
 float noise(in float seed) {
 	return fract(tan(seed) * 1000.0);

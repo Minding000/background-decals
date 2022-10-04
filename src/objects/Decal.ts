@@ -1,5 +1,6 @@
 import { Layer } from './Layer';
 import { DecalError } from './errors';
+import { Util } from '../util';
 
 export class Decal {
 	private readonly canvas: HTMLCanvasElement
@@ -14,7 +15,7 @@ export class Decal {
 	) {
 		try {
 			const configuration = { ...defaultConfiguration, ...configurationOverwrites }
-			this.millisecondsBetweenFrames = 1000 / configuration.targetFrameRate
+			this.millisecondsBetweenFrames = Util.MILLISECONDS_PER_SECOND / configuration.targetFrameRate
 			this.canvas = this.createCanvas(configuration.width, configuration.height)
 			this.context = this.createContext()
 

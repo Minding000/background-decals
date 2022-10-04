@@ -1,10 +1,10 @@
 import { Color, Layer } from '../../objects';
+import { Util } from '../../util';
 
 import vertexShaderCode from './vertex.glsl?raw';
 import fragmentShaderCode from './fragment.glsl?raw';
 
 export class FallingDots extends Layer {
-	private static readonly MILLISECONDS_PER_SECOND = 1000
 	public static readonly MAX_NUMBER_OF_UNIQUE_ITERATIONS = 100000
 	private readonly numberOfDots: number
 	private readonly numberOfUniqueIterations: number
@@ -25,15 +25,14 @@ export class FallingDots extends Layer {
 	public setUp(context: WebGL2RenderingContext): void {
 		this.setUpProgram(context, vertexShaderCode, fragmentShaderCode)
 		this.program?.setColor("color", this.color)
-		this.program?.setUniform("1i", "numberOfDots", this.numberOfDots)
-		this.program?.setUniform("1i", "numberOfUniqueIterations", this.numberOfUniqueIterations)
+		this.program?.setUniform("numberOfUniqueIterations", this.numberOfUniqueIterations)
 	}
 
 	public render(): void {
-		const iterationDurationInMilliseconds = FallingDots.MILLISECONDS_PER_SECOND * this.iterationDurationInSeconds
+		const iterationDurationInMilliseconds = Util.MILLISECONDS_PER_SECOND * this.iterationDurationInSeconds
 		const continuousFloatBetweenZeroAndIterationCount = (Date.now() / iterationDurationInMilliseconds) % this.numberOfUniqueIterations
 		this.program?.use()
-		this.program?.setUniform("1f", "continuousFloatBetweenZeroAndIterationCount", continuousFloatBetweenZeroAndIterationCount)
+		this.program?.setUniform("continuousFloatBetweenZeroAndIterationCount", continuousFloatBetweenZeroAndIterationCount)
 		this.context?.drawArrays(this.context.POINTS, 0, this.numberOfDots);
 	}
 }
