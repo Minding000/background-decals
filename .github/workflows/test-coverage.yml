@@ -1,0 +1,39 @@
+name: test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  update-coverage-badge:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v3
+      - name: Install nodejs version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate coverage report
+        run: npm run test:coverage > console-coverage.txt
+      - name: Create coverage report environment variable
+        run: node scripts/extract-coverage-percentage.js
+      - name: Update coverage badge gist
+        uses: schneegans/dynamic-badges-action@v1.4.0
+        with:
+          auth: ${{ secrets.GIST_WRITE_ACCESS }}
+          gistID: 8c07e6a85bf1218ceb5f93d34970b180
+          filename: test-coverage.json
+          label: coverage
+          message: ${{ env.coveragePercentage }}%
+          valColorRange: ${{ env.coveragePercentage }}
+          maxColorRange: 100
+          minColorRange: 0
