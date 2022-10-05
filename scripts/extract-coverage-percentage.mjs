@@ -1,7 +1,7 @@
 import { readFileSync, appendFileSync } from 'fs'
 
 const COVERAGE_REPORT_FILE_PATH = "console-coverage.txt"
-const COVERAGE_PERCENTAGE_REGEX = /(?!All\sfiles\s*)\d+.\d+/i
+const COVERAGE_PERCENTAGE_REGEX = /(?<=all\sfiles[\s|]+)\d+.\d+/i
 const COVERAGE_PERCENTAGE_PRECISION = 2
 
 const coverageOutput = readFileSync(COVERAGE_REPORT_FILE_PATH).toString()
