@@ -3,6 +3,8 @@ name: type-check
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
   type-check:
