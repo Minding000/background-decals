@@ -3,8 +3,6 @@ name: update-coverage-badge
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   update-coverage-badge:
