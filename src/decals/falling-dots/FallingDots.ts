@@ -7,6 +7,7 @@ import fragmentShaderCode from './fragment.glsl?raw';
 export class FallingDots extends Layer {
 	public static readonly MAX_NUMBER_OF_UNIQUE_ITERATIONS = 100000
 	private readonly numberOfDots: number
+	private readonly dotRadius: number
 	private readonly numberOfUniqueIterations: number
 	private readonly iterationDurationInSeconds: number
 	private readonly color: Color
@@ -17,6 +18,7 @@ export class FallingDots extends Layer {
 		super()
 		const configuration = { ...defaultConfiguration, ...configurationOverwrites }
 		this.numberOfDots = configuration.numberOfDots
+		this.dotRadius = configuration.dotRadius
 		this.numberOfUniqueIterations = configuration.numberOfUniqueIterations
 		this.iterationDurationInSeconds = configuration.iterationDurationInSeconds
 		this.color = configuration.color
@@ -25,6 +27,7 @@ export class FallingDots extends Layer {
 	public setUp(context: WebGL2RenderingContext): void {
 		this.setUpProgram(context, vertexShaderCode, fragmentShaderCode)
 		this.program?.setColor("color", this.color)
+		this.program?.setUniform("dotRadius", this.dotRadius)
 		this.program?.setUniform("numberOfUniqueIterations", this.numberOfUniqueIterations)
 	}
 
@@ -39,6 +42,7 @@ export class FallingDots extends Layer {
 
 export interface FallingDotsConfiguration {
 	numberOfDots: number
+	dotRadius: number
 	numberOfUniqueIterations: number
 	iterationDurationInSeconds: number
 	color: Color
@@ -46,6 +50,7 @@ export interface FallingDotsConfiguration {
 
 const defaultConfiguration: FallingDotsConfiguration = {
 	numberOfDots: 100,
+	dotRadius: 2.5,
 	numberOfUniqueIterations: FallingDots.MAX_NUMBER_OF_UNIQUE_ITERATIONS,
 	iterationDurationInSeconds: 1,
 	color: Color.DEFAULT
