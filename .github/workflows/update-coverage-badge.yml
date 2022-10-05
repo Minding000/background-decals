@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Generate coverage report
-        run: npm run test:coverage > console-coverage.txt
+        run: npm run test:coverage | tee console-coverage.txt
       - name: Create coverage report environment variable
         run: node scripts/extract-coverage-percentage.mjs
       - name: Update coverage badge gist
