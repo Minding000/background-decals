@@ -1,4 +1,4 @@
-name: test
+name: update-coverage-badge
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Generate coverage report
         run: npm run test:coverage > console-coverage.txt
       - name: Create coverage report environment variable
-        run: node scripts/extract-coverage-percentage.js
+        run: node scripts/extract-coverage-percentage.mjs
       - name: Update coverage badge gist
         uses: schneegans/dynamic-badges-action@v1.4.0
         with:
