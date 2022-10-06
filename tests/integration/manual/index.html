@@ -7,8 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Document</title>
 		<script defer type="module">
-			import { Decal, DottedCircle, Color } from "../../../src";
-			import { FallingDots } from "../../../src/decals/falling-dots";
+			import { Decal, DottedCircle, Color, MousePosition, FallingDots, MouseCursor } from "../../../src";
 
 			try {
 				const decal = new Decal([
@@ -21,10 +20,11 @@
 						color: Color.RED,
 						rotationDirection: "counter-clockwise"
 					}),
-					new FallingDots()
+					new MouseCursor()
 				], { width: 800 })
 				decal.start()
 				const canvas = decal.getElement()
+
 				canvas.style.border = "solid 1px #546546"
 				document.body.append(canvas)
 			} catch(error) {
