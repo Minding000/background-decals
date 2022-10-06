@@ -5,7 +5,9 @@ import fragmentShaderCode from './fragment.glsl?raw';
 import { MousePosition } from '../../util';
 
 export class MouseCursor extends Layer {
-	private readonly dotSize: number
+	private readonly cursorRadius: number
+	private readonly cursorCorners: number
+	private readonly cursorLineWidth: number
 	private readonly color: Color
 	private readonly position: MousePosition
 
@@ -14,33 +16,41 @@ export class MouseCursor extends Layer {
 	) {
 		super()
 		const configuration = { ...defaultConfiguration, ...configurationOverwrites }
-		this.dotSize = configuration.dotSize
+		this.cursorRadius = configuration.cursorRadius
+		this.cursorCorners = configuration.cursorCorners
+		this.cursorLineWidth = configuration.cursorLineWidth
 		this.color = configuration.color
 		this.position = configuration.position
 	}
 
 	public setUp(context: WebGL2RenderingContext): void {
 		this.setUpProgram(context, vertexShaderCode, fragmentShaderCode)
+		context.lineWidth(this.cursorLineWidth)
 		this.program?.setColor("color", this.color)
-		this.program?.setUniform("dotSize", this.dotSize)
+		this.program?.setUniform("cursorRadius", this.cursorRadius)
+		this.program?.setUniform("cursorCorners", this.cursorCorners)
 		this.program?.setUniform("resolution", context.canvas.width, context.canvas.height)
 	}
 
 	public render(): void {
 		this.program?.use()
 		this.program?.setUniform("mousePosition", this.position.x, this.position.y)
-		this.context?.drawArrays(this.context.POINTS, 0, 20);
+		this.context?.drawArrays(this.context.LINE_LOOP, 0, this.cursorCorners);
 	}
 }
 
 export interface MouseCursorConfiguration {
-	dotSize: number
+	cursorRadius: number
+	cursorCorners: number
+	cursorLineWidth: number
 	color: Color
 	position: MousePosition
 }
 
 const defaultConfiguration: MouseCursorConfiguration = {
-	dotSize: 20,
+	cursorRadius: 32,
+	cursorCorners: 4,
+	cursorLineWidth: 2,
 	color: Color.DEFAULT,
 	position: new MousePosition(window)
 }

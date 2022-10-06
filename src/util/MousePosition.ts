@@ -6,8 +6,9 @@ export class MousePosition {
 		listenElement.addEventListener('mousemove', this.onMouseMove.bind(this))
 	}
 
-	onMouseMove(event: MouseEvent) {
-		this.x = event.clientX
-		this.y = event.clientY
+	onMouseMove(event: Event) {
+		const mouseEvent = event as MouseEvent
+		this.x = mouseEvent.clientX
+		this.y = mouseEvent.clientY
 	}
 }
