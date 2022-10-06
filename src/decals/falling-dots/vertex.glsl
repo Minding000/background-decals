@@ -1,5 +1,6 @@
 #version 300 es
 uniform float continuousFloatBetweenZeroAndIterationCount;
+uniform float dotRadius;
 uniform int numberOfUniqueIterations;
 
 float noise(in float seed) {
@@ -22,5 +23,5 @@ void main() {
 	localXPosition = scaleToViewport(localXPosition);
 	localYPosition = scaleToViewport(localYPosition);
 	gl_Position = vec4(localXPosition, localYPosition, 0, 1);
-	gl_PointSize = 5.0;
+	gl_PointSize = dotRadius;
 }

@@ -13,10 +13,14 @@
 			try {
 				const decal = new Decal([
 					new DottedCircle({
-						radius: 0.6,
+						dotRadius: 3,
+						circleRadius: 0.6,
 						color: Color.GREEN
 					}),
-					new DottedCircle(),
+					new DottedCircle({
+						color: Color.RED,
+						rotationDirection: "counter-clockwise"
+					}),
 					new FallingDots()
 				], { width: 800 })
 				decal.start()
